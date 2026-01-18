@@ -1,100 +1,113 @@
-
-
-const banner_list = new Swiper(".banner_list", {
-    navigation: {
-        nextEl: ".swiper-button-next",
-        prevEl: ".swiper-button-prev",
-    },
-    loop: true,
-    effect: 'fade',
-    speed: 500,
-    autoplay: {
-        delay: 3000,
-        disableOnInteraction: false,
-    },
-});
-
-//xb_list 초기화
-const xb_list = new Swiper(".xb_list", {
-    effect: 'fade',
-    speed: 500,
-    loop: true,
-
-    autoplay: {
-        delay: 3000,
-        disableOnInteraction: false,
-    },
-});
-
-//concert_list 초기화
-const concert_list = new Swiper(".concert_list", {
-    effect: 'fade',
-    speed: 500,
-    loop: true,
-
-    autoplay: {
-        delay: 3000,
-        disableOnInteraction: false,
-    },
-});
-
-//review_list 초기화
-const review_list = new Swiper(".review_list", {
-    direction: 'vertical',
-    speed: 3000,
-    loop: true,
-
-    autoplay: {
-        delay: 5000,
-        disableOnInteraction: false,
+$('#fullpage').fullpage({
+    responsiveWidth: 1380,
+    scrollHorizontally: true,
+    navigation: true,
+    navigationPosition: 'right',
+    showActiveTooltip: true,
+    onLeave: function (origin, destination, direction, trigger) {
+        if (destination === 2 || destination === 4) {
+            $("#header,#fp-nav").addClass("active");
+        } else {
+            $("#header,#fp-nav").removeClass("active");
+        };
+        if (destination === 6) {
+            $("#fp-nav, #header").fadeOut();
+        } else {
+            $("#fp-nav, #header").fadeIn();
+        };
     },
 });
 
 
-const review_img_list = new Swiper(".review_img_list", {
-    slidesPerView: 6.5,
-    spaceBetween: 30,
+$(document).ready(function () {
 
-    loop: true,
+    const banner_list = new Swiper(".banner_list", {
+        navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+        },
+        loop: true,
+        effect: 'fade',
+        speed: 1000,
+        autoplay: {
+            delay: 3000,
+            disableOnInteraction: false,
+        },
+    });
 
-    autoplay: {
-        delay: 0,
-        disableOnInteraction: false,
-    },
-    speed: 3000,
+
+    const swiperTabOptions = {
+        effect: 'fade',
+        speed: 1000,
+        loop: true,
+        observer: true,
+        observeParents: true,
+        autoplay: {
+            delay: 3000,
+            disableOnInteraction: false,
+        },
+    };
+
+    const xb_list = new Swiper(".xb_list", swiperTabOptions);
+    const concert_list = new Swiper(".concert_list", swiperTabOptions);
+
+
+
+    const review_list = new Swiper(".review_list", {
+        direction: 'horizontal',
+        slidesPerView: 1,
+        spaceBetween: 20,
+        breakpoints: {
+            1200: {
+                slidesPerView: 3,
+                spaceBetween: 30,
+            },
+            700: {
+                slidesPerView: 2,
+                spaceBetween: 20,
+            },
+        },
+        speed: 1000,
+        loop: true,
+        autoplay: {
+            delay: 7000,
+            disableOnInteraction: false,
+        },
+        observer: true,
+        observeParents: true,
+    });
+
+    const tickerOptions = {
+
+        loop: true,
+        speed: 3000,
+        allowTouchMove: false,
+        freeMode: true,
+        autoplay: {
+            delay: 0,
+            disableOnInteraction: false,
+        },
+    };
+
+
+
+
+
+
+
+
 });
-const review_video_list = new Swiper(".review_video_list", {
-    slidesPerView: 6.5,
-    
 
-    spaceBetween: 30,
-    loop: true,
+document.addEventListener('DOMContentLoaded', function () {
+    const ticketLists = document.querySelectorAll('.ticket_txt_more');
 
-    autoplay: {
-        delay: 0,
-        disableOnInteraction: false,
-        reverseDirection: true,
-    },
-    speed: 5000,
+    ticketLists.forEach(function (dl) {
+        const dt = dl.querySelector('dt');
+        dt.addEventListener('click', function () {
+            ticketLists.forEach(target => {
+                if (target !== dl) target.classList.remove('active');
+            });
+            dl.classList.toggle('active');
+        });
+    });
 });
-
-/* [tab depth3 활성화] 잘 안되는 부분 */
-$(".tab_btn1 button").click(function () {
-    $(this).addClass("active").siblings().removeClass("active");
-    let num = $(this).index();
-    console.log(num);
-    $(".tab_list1 .tab_contents").eq(num).fadeIn().siblings().hide();
-})
-$(".tab_btn2 button").click(function () {
-    $(this).addClass("active").siblings().removeClass("active");
-    let num = $(this).index();
-    console.log(num);
-    $(".tab_list2 .tab_contents").eq(num).fadeIn().siblings().hide();
-})
-$(".tab_btn3 button").click(function () {
-    $(this).addClass("active").siblings().removeClass("active");
-    let num = $(this).index();
-    console.log(num);
-    $(".tab_list3 .tab_contents").eq(num).fadeIn().siblings().hide();
-})
-
